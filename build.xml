@@ -1,0 +1,45 @@
+<project name="hadoop-collectd" default="dist" basedir="."> 
+  <property file="${user.home}/.hadoop-collectd-build.properties"/>
+  <property environment="env"/> 
+
+  <property name="hadoop"
+            value="../../../hadoop-core-trunk"/>
+  <property name="hadoop.jar" 
+            location="${hadoop}/build/hadoop-metrics-0.21.0-dev.jar"/>
+  <property name="logging.jar" 
+            location="${hadoop}/build/ivy/lib/Hadoop/common/commons-logging-1.0.4.jar"/>
+  <property name="collectd.jar" 
+            location="../jcollectd/target/lib/collectd.jar"/>
+
+  <path id="hd.classpath"> 
+    <path location="${hadoop.jar}"/> 
+    <path location="${collectd.jar}"/> 
+    <path location="${logging.jar}"/> 
+  </path> 
+ 
+  <target name="init"> 
+    <mkdir dir="build/classes"/> 
+  </target> 
+ 
+  <target name="compile" depends="init"> 
+    <javac srcdir="src/core"  
+           destdir="build/classes"  
+           debug="true" 
+           source="1.6" 
+           target="1.6" 
+           classpathref="hd.classpath"/> 
+  </target> 
+ 
+  <target name="dist" depends="compile"> 
+    <jar jarfile="build/hadoop-collectd.jar">
+      <fileset dir="." includes="*.properties"/>
+      <fileset dir="build/classes" includes="**/*.class"> 
+        <exclude name="**/test/*"/> 
+      </fileset> 
+    </jar> 
+  </target> 
+  
+  <target name="clean"> 
+    <delete dir="build"/> 
+  </target> 
+</project>
