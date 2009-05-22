@@ -32,7 +32,7 @@ import org.apache.hadoop.metrics.spi.OutputRecord;
 import org.apache.hadoop.metrics.spi.Util;
 import org.collectd.protocol.Network;
 import org.collectd.protocol.UdpSender;
-import org.collectd.protocol.ValueList;
+import org.collectd.api.ValueList;
 
 /**
  * Context for sending metrics to collectd.
